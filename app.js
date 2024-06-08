@@ -2,7 +2,7 @@ require("dotenv").config();
 const cors = require("cors");
 const express = require("express");
 const app = express();
-const port = process.env.PORT || 5500; // Ensure a default port if not specified in .env
+const port = process.env.PORT || 3306; // Ensure a default port if not specified in .env
 
 // Import db connection (ensure these files are correctly set up)
 const { dbConnectionPool, dbConnectionPromise } = require('./db/dbConfig');
