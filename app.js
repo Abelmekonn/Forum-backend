@@ -2,9 +2,9 @@ require("dotenv").config();
 const cors = require("cors");
 const express = require("express");
 const app = express();
-const port = process.env.PORT || 3306; // Ensure a default port if not specified in .env
+const port = process.env.SERVER_PORT || 3000; // Use a different port for the server, not the MySQL port
 
-// Import db connection (ensure these files are correctly set up)
+// Import db connection
 const { dbConnectionPool, dbConnectionPromise } = require('./db/dbConfig');
 
 // Import route files
@@ -19,7 +19,7 @@ app.use(cors());
 // Route middlewares
 app.use("/api/users", userRouter);
 app.use("/api/questions", questionRoute);
-app.use("/api/answers", answerRoute); // Ensure consistency with pluralization
+app.use("/api/answers", answerRoute);
 
 // Default 404 handler for undefined routes
 app.use((req, res, next) => {
@@ -35,8 +35,9 @@ app.use((err, req, res, next) => {
 // Start the server
 async function startServer() {
     try {
-        await app.listen(port);
-        console.log(`Server listening on port ${port}`);
+        app.listen(port, () => {
+            console.log(`Server listening on port ${port}`);
+        });
     } catch (error) {
         console.log('Error starting server:', error);
     }
